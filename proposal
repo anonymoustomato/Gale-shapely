@@ -1,59 +1,60 @@
-void proposal2(person woman[], person man[]){
+void proposal(person woman[], person man[]){
         for(int i=0; i<n; i++){
-            man[i].didPropose.push_back(false);
-        }
-        for(int i=0; i<n; i++){
-            woman[i].engaged = false;
-            woman[i].ranking = men[i+1];
-            woman[i].sigOther = -1;
+            woman[i].didPropose.push_back(false);
         }
         for(int i=0; i<n; i++){
             man[i].engaged = false;
-            man[i].ranking = women[i+1];
+            man[i].ranking = men[i+1];
             man[i].sigOther = -1;
         }
-        
+        for(int i=0; i<n; i++){
+            woman[i].engaged = false;
+            woman[i].ranking = women[i+1];
+            woman[i].sigOther = -1;
+        }
+    
         int j=0;
     loop1:
         while(engagements!=n){
             j=j%n;
         loop2:
             for(int i=0; i<n; i++){
-                int best = man[j].ranking[i]-1;
-                if(man[j].didPropose[i]==false && man[j].sigOther==-1){
-                    if(woman[best].engaged==false){
-                        man[j].didPropose[i]==true;
-                        man[j].sigOther = man[j].ranking[i];
-                        woman[best].sigOther = j+1;
-                        woman[best].engaged = true;
-                        man[j].engaged = true;
-                        engagements++;
-                        break;
-                    }
-                    else if(woman[best].engaged==true){
-                        int wP = woman[best].sigOther;
-                        int w = j+1;
-                        for(int k=0; k<n; k++){
-                            if(woman[best].ranking[k]==wP){
-                                break;
-                            }
-                            else if(woman[best].ranking[k]==w){
-                                man[j].didPropose[i]==true;
-                                man[j].sigOther = man[j].ranking[i];
-                                woman[best].sigOther = j+1;
-                                woman[best].engaged = true;
-                                man[j].engaged = true;
-                                man[wP-1].engaged= false;
-                                man[wP-1].sigOther=-1;
-                                j=wP-1;
-                                goto loop1;
-                                break;
-                                
-                            }
+                int best = woman[j].ranking[i]-1;
+                if(woman[j].didPropose[i]==false && woman[j].sigOther==-1){
+                if(man[best].engaged==false){
+                    woman[j].didPropose[i]==true;
+                    woman[j].sigOther = woman[j].ranking[i];
+                    man[best].sigOther = j+1;
+                    man[best].engaged = true;
+                    woman[j].engaged = true;
+                    engagements++;
+                    break;
+                }
+                    
+                else if(man[best].engaged==true){
+                    int wP = man[best].sigOther;
+                    int w = j+1;
+                    for(int k=0; k<n; k++){
+                        if(man[best].ranking[k]==wP){
+                            break;
+                        }
+                        else if(man[best].ranking[k]==w){
+                            woman[j].didPropose[i]==true;
+                            woman[j].sigOther = woman[j].ranking[i];
+                            man[best].sigOther = j+1;
+                            man[best].engaged = true;
+                            woman[j].engaged = true;
+                            woman[wP-1].engaged= false;
+                            woman[wP-1].sigOther==-1;
+                            j=wP-1;
+                            goto loop1;
+                            break;
+                            
                         }
                     }
                 }
             }
+        }
             j++;
         }
     finish:
@@ -61,8 +62,8 @@ void proposal2(person woman[], person man[]){
         pair<int, int> pear;
         for(int u =0; u<n; u++){
             pear.second =u+1;
-            pear.first = man[u].sigOther;
+            pear.first = woman[u].sigOther;
             vectorPair.push_back(pear);
         }
-        stableMatchings.push_back(vectorPair);
+   stableMatchings.push_back(vectorPair);
     }

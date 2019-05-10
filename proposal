@@ -1,3 +1,4 @@
+//gale shapely
 void proposal(person woman[], person man[]){
         for(int i=0; i<n; i++){
             woman[i].didPropose.push_back(false);
